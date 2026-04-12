@@ -1,13 +1,13 @@
 {
   "enabled": true,
-  "name": "Auto Push to GitHub",
-  "description": "Automatically commits and pushes all changes to GitHub after files are edited, triggering a Vercel auto-deploy",
+  "name": "Auto Deploy to Vercel",
+  "description": "Automatically commits, pushes to GitHub, and deploys to Vercel production after agent finishes",
   "version": "1",
   "when": {
     "type": "agentStop"
   },
   "then": {
     "type": "runCommand",
-    "command": "cd \"/Users/asifmollik/Documents/Alphainno /All Products/Alpha ERP\" && git add . && git diff --cached --quiet || git commit -m \"Auto-update: $(date '+%Y-%m-%d %H:%M')\" && git push origin main"
+    "command": "cd \"/Users/asifmollik/Documents/Alphainno /All Products/Alpha ERP\" && git add . && git diff --cached --quiet || git commit -m \"Auto-update: $(date '+%Y-%m-%d %H:%M')\" && git push origin main && vercel --prod --yes --scope asif-molliks-projects"
   }
 }
