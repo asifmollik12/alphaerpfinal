@@ -8,6 +8,6 @@
   },
   "then": {
     "type": "runCommand",
-    "command": "cd \"/Users/asifmollik/Documents/Alphainno /All Products/Alpha ERP\" && git add . && git diff --cached --quiet || git commit -m \"Auto-update: $(date '+%Y-%m-%d %H:%M')\" && git push origin main && vercel --prod --yes --scope asif-molliks-projects"
+    "command": "cd \"/Users/asifmollik/Documents/Alphainno /All Products/Alpha ERP\" && git add . && git diff --cached --quiet || git commit -m \"Auto-update: $(date '+%Y-%m-%d %H:%M')\" && git push origin main && vercel --prod --yes --scope asif-molliks-projects --project nextn"
   }
 }
