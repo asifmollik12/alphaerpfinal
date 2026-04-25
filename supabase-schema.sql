@@ -81,3 +81,30 @@ INSERT INTO modules (name, description, icon) VALUES
   ('Projects', 'Project management', 'FolderKanban'),
   ('Reports', 'Reports and analytics', 'BarChart')
 ON CONFLICT DO NOTHING;
+
+
+-- Files table (for tracking uploaded files)
+CREATE TABLE IF NOT EXISTS files (
+  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  company_id UUID REFERENCES companies(id) ON DELETE CASCADE,
+  file_name VARCHAR(255) NOT NULL,
+  file_path TEXT NOT NULL,
+  file_url TEXT NOT NULL,
+  file_size BIGINT,
+  file_type VARCHAR(100),
+  folder VARCHAR(255),
+  uploaded_by UUID,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW()),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW())
+);
+
+-- Enable RLS on files
+ALTER TABLE files ENABLE ROW LEVEL SECURITY;
+
+-- Files policy - users can only see their company's files
+CREATE POLICY "Users can view company files" ON files
+  FOR SELECT USING (
+    company_id IN (
+      SELECT company_id FROM users WHERE id::text = auth.uid()::text
+    )
+  );
